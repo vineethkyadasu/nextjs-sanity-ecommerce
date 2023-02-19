@@ -11,7 +11,7 @@ import { CookieCart, CartProduct } from "lib/interfaces";
 import Cookies from "js-cookie";
 import client from "lib/sanity/client";
 import { useRouter } from "next/router";
-
+import TagManager from 'react-gtm-module';
 const cartItems = Cookies.get("_cart");
 
 const parsedCartItems = cartItems && JSON.parse(cartItems);
@@ -40,6 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   useEffect(() => {
+    TagManager.initialize({ gtmId: 'GTM-W8CSNDP' });
     const fetchCartProducts = async () => {
       if (parsedCartItems) {
         const cartProducts = await client.fetch(productsBySlugsQuery, {
