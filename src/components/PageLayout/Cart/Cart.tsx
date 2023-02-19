@@ -22,6 +22,10 @@ const Cart = () => {
 
   const handleCheckout = async () => {
     setRedirecting(true);
+    window.dataLayer.push({ ecommerce: null });  // Clear the previous ecommerce object.
+        window.dataLayer.push({
+        event: "add_to_cart"
+        });
 
     const stripe = await getStripe();
 
