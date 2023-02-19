@@ -6,6 +6,12 @@ import classNames from "classnames";
 import { CartProduct } from "lib/interfaces";
 import getStripe from "lib/stripe/getStripe";
 
+declare global {
+  interface Window {
+    dataLayer: Record<string, any>[];
+  }
+}
+
 const Cart = () => {
   const [isRedirecting, setRedirecting] = useState(false);
   const { cart } = useContext(CartItemsContext);
@@ -23,7 +29,7 @@ const Cart = () => {
   const handleCheckout = async () => {
     setRedirecting(true);
     window.dataLayer.push({ ecommerce: null });  // Clear the previous ecommerce object.
-        window.dataLayer.push({
+        window.dataLayer?.push({
         event: "add_to_cart"
         });
 
