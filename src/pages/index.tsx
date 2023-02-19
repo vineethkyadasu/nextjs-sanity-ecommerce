@@ -6,7 +6,6 @@ import { CategorySchema, ProductSchema } from "lib/interfaces/schema";
 import MetaHead from "components/MetaHead";
 import CategoryList from "components/CategoryList/CategoryList";
 import ProductList from "components/ProductList/ProductList";
-import TagManager from 'react-gtm-module';
 
 interface HomeProps {
   categories: CategorySchema[];
@@ -14,7 +13,6 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ categories, products }) => {
-  TagManager.initialize({ gtmId: 'GTM-W8CSNDP' });
   return (
     <>
       <MetaHead description="An eCommerce app that is built by NextJS, Sanity and Stripe." />
