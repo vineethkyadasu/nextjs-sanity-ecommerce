@@ -23,6 +23,10 @@ const Product: React.FC<ProductProps> = ({ product }) => {
   const { dispatch } = useContext(CartItemsContext);
 
   const addToCart = () => {
+    window.dataLayer.push({ ecommerce: null });  // Clear the previous ecommerce object.
+        window.dataLayer?.push({
+        event: "add_to_cart"
+        });
     dispatch({
       type: Types.addToCart,
       payload: { ...product }
