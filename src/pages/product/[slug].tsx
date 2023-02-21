@@ -24,8 +24,10 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
   const addToCart = () => {
     window.dataLayer.push({ ecommerce: null });  // Clear the previous ecommerce object.
+    console.log(product)
         window.dataLayer?.push({
         event: "add_to_cart"
+
         });
     dispatch({
       type: Types.addToCart,
