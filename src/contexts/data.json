@@ -1,0 +1,20 @@
+{
+    "Hoodie with Zipper": {
+        "currency": "USD",
+        "value": 1181,
+        "item_id": 123,
+        "item_name": "Hoodie with Zipper",
+        "item_brand": "Google",
+        "item_category": "men",
+        "item_category2": "navy",
+        "item_category3": " cotton blend",
+        "item_category4": " front button fastening",
+        "item_category5": " notched collar",
+        "item_list_id": "related_products",
+        "item_list_name": "Related Products",
+        "item_variant": "black",
+        "price": 1181,
+        "quantity": 1
+      }
+
+}

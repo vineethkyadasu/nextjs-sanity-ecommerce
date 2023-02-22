@@ -13,7 +13,7 @@ import client from "lib/sanity/client";
 import classNames from "classnames";
 import MetaHead from "components/MetaHead";
 import CartVisibilityContext from "contexts/cartVisibilityContext";
-
+import { ecom_event } from "contexts/eventDetailsContext";
 interface ProductProps {
   product: ProductSchema;
 }
@@ -25,18 +25,19 @@ const Product: React.FC<ProductProps> = ({ product }) => {
   const addToCart = () => {
     window.dataLayer.push({ ecommerce: null });  // Clear the previous ecommerce object.
     console.log(product)
-        window.dataLayer?.push({
-        event: "add_to_cart",
-        ecommerce:{
-          currency:"USD",
-          item:[
-            {
-              item_name:product.name,
-              price:product.price
-            }
-          ]
-        }
-        });
+    ecom_event("add_to_cart",product.name)
+        // window.dataLayer?.push({
+        // event: "add_to_cart",
+        // ecommerce:{
+        //   currency:"USD",
+        //   item:[
+        //     {
+        //       item_name:product.name,
+        //       price:product.price
+        //     }
+        //   ]
+        // }
+        // });
     dispatch({
       type: Types.addToCart,
       payload: { ...product }
