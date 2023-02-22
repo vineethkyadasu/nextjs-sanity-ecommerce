@@ -11,6 +11,12 @@ export function ecom_event (event_type: string,p_name: string){
         ecommerce: {
             currency: data[p_name]["currency"],
             value: data[p_name]["value"],
+            items:[
+                {
+                    item_name:p_name,
+                    price:data[p_name]["value"]
+                }
+            ]
         }
         });
 
