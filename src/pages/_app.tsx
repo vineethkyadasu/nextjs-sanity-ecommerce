@@ -40,7 +40,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   useEffect(() => {
-    TagManager.initialize({ gtmId: 'GTM-W8CSNDP' });
+    // TagManager.initialize({ gtmId: 'GTM-W8CSNDP' });
+    TagManager.initialize({ gtmId: 'GTM-T8HBGCC' }); // server side
     const fetchCartProducts = async () => {
       if (parsedCartItems) {
         const cartProducts = await client.fetch(productsBySlugsQuery, {
