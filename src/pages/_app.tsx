@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     // TagManager.initialize({ gtmId: 'GTM-W8CSNDP' });
-    TagManager.initialize({ gtmId: 'GTM-T8HBGCC' }); // server side
+    TagManager.initialize({ gtmId: 'GTM-N6NNTSZ' }); // server side
     const fetchCartProducts = async () => {
       if (parsedCartItems) {
         const cartProducts = await client.fetch(productsBySlugsQuery, {
