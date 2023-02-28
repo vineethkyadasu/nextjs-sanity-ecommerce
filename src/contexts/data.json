@@ -15,6 +15,14 @@
         "item_variant": "black",
         "price": 1181,
         "quantity": 1
+      },
+      "Cap":{
+        "currency": "USD",
+        "value": 16,
+        "item_id": 13,
+        "item_name": "Cap",
+        "price": 1181,
+        "quantity": 1
       }
 
 }
