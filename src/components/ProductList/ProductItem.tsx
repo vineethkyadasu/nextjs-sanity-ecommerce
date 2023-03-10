@@ -4,14 +4,21 @@ import Image from "next/image";
 import { ProductSchema } from "lib/interfaces";
 import urlFor from "lib/sanity/urlFor";
 import classNames from "classnames";
-
+import { ecom_event } from "contexts/eventDetailsContext";
 interface ProductItemProps {
   product: ProductSchema;
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
+
+  const viewItem = () => {
+    window.dataLayer.push({ ecommerce: null });  // Clear the previous ecommerce object.
+    console.log(product)
+    ecom_event("view_item",product.name)  
+  };
+
   return (
-    <div className={styles.productItem}>
+    <div className={styles.productItem} onClick={viewItem}>
       <Link href={`/product/${product.slug}`}>
         <a className="relative w-full h-full">
           <div className="w-full h-64 md:mb-4 mb-2 overflow-hidden relative">
