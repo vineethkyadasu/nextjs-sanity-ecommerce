@@ -4,6 +4,14 @@ from apache_beam.io.gcp import bigquery
 from datetime import timedelta
 import json
 
+def format_output(item_count):
+    item_name, count, timestamp = item_count
+    return {
+        'item_name': item_name,
+        'count': count,
+        'timestamp': timestamp
+    }
+
 # Set up the pipeline options
 options = PipelineOptions.from_dictionary({
     'runner': 'DataflowRunner',
@@ -25,23 +33,20 @@ with beam.Pipeline(options=options) as p:
     | 'Extract item name and timestamp' >> beam.Map(lambda x: (x['item_name'], x['timestamp']))
     # Assign timestamps and window the events into 30-second intervals
     | 'Timestamp and window' >> beam.WindowInto(
-        beam.window.FixedWindows(size=timedelta(seconds=180)),
-        timestamp_combiner=beam.transforms.trigger.TimestampCombiner.OUTPUT_AT_END)
+        beam.window.FixedWindows(size=30),
+        accumulation_mode=beam.trigger.AccumulationMode.DISCARDING,
+        allowed_lateness=0)
     # Group the events by item ID and count the number of events
     | 'Group by item ID' >> beam.GroupByKey()
-    | 'Count by item ID' >> beam.Map(lambda x: (x[0], len(x[1])))
-    # Filter the items that have a count of 5 or more
+    | 'Count items' >> beam.Map(lambda x: (x[0], len(x[1]) if x[1] else 0, x[1][0] if x[1] else None))
     | 'Filter by count' >> beam.Filter(lambda x: x[1] >= 5)
+    | 'Format output' >> beam.Map(format_output)
+    # Filter the items that have a count of 5 or more
+
     | 'Write to BigQuery' >> bigquery.WriteToBigQuery(
-        table='eventData',
+        table='itemInDemand',
         dataset='gtm_monitoring',
         project='gtm-t8hbgcc-owqxz',
-        schema={
-    'fields': [
-        {'name': 'item_name', 'type': 'STRING'},
-        {'name': 'count', 'type': 'INTEGER'},
-        {'name': 'timestamp', 'type': 'TIMESTAMP'}
-    ]
-},
+        schema='item_name:STRING,count:INTEGER,timestamp:TIMESTAMP',
         create_disposition=bigquery.BigQueryDisposition.CREATE_IF_NEEDED,
         write_disposition=bigquery.BigQueryDisposition.WRITE_APPEND))
