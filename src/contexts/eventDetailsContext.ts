@@ -7,12 +7,12 @@ export function ecom_event (event_type: string,p_name: string){
         window.dataLayer.push({
         event: event_type,
         ecommerce: {
-            currency: data[p_name]["currency"],
-            value: data[p_name]["value"],
+            currency: "USD",
+            value: 123,
             items:[
                 {
                     item_name:p_name,
-                    price:data[p_name]["value"]
+                    price:123
                 }
             ]
         }
